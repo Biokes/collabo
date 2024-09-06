@@ -1,7 +1,6 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/dbConfig'); 
-const User = require('./User');
-
+const sequelize = require('../config/dbConfig');
+const User = require('./User'); 
 const Account = sequelize.define('Account', {
   id: {
     type: DataTypes.INTEGER,
@@ -14,8 +13,7 @@ const Account = sequelize.define('Account', {
     unique: true
   },
   accountType: {
-    type: DataTypes.ENUM,
-    values: ['Checking', 'Savings', 'Credit'],
+    type: DataTypes.ENUM('Checking', 'Savings', 'Credit'),
     allowNull: false
   },
   balance: {
@@ -40,5 +38,8 @@ const Account = sequelize.define('Account', {
     defaultValue: DataTypes.NOW
   }
 });
+
+User.hasOne(Account, { foreignKey: 'userId' });
+Account.belongsTo(User, { foreignKey: 'userId' });
 
 module.exports = Account;

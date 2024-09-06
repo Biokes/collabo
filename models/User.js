@@ -1,6 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database'); // Assuming you have a database configuration file
-const Account = require('./Account'); // Import the Account model
+const sequelize = require('../config/dbConfig');
 
 const User = sequelize.define('User', {
   id: {
@@ -50,9 +49,5 @@ const User = sequelize.define('User', {
     defaultValue: DataTypes.NOW
   }
 });
-
-// Establish the one-to-one relationship
-User.hasOne(Account, { foreignKey: 'userId' });
-Account.belongsTo(User, { foreignKey: 'userId' });
 
 module.exports = User;
